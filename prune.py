@@ -38,3 +38,25 @@ for filename in os.listdir(target_directory):
             file_dict[base_name] = []
         file_dict[base_name].append(filename)
 
+# Process each set of files with the same base name
+for base_name, files in file_dict.items():
+    # Create a folder with the name of the base file (excluding the extension)
+    folder_name = base_name
+    folder_path = os.path.join(target_directory, folder_name)
+    
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    
+    for filename in files:
+        file_path = os.path.join(target_directory, filename)
+        
+        # Move the file to the new folder
+        new_file_path_in_folder = os.path.join(folder_path, filename)
+        
+        # Clean the filename
+        cleaned_filename = clean_wbfs_filename(filename)
+        if cleaned_filename != filename:
+            # Rename the file inside the folder
+            final_file_path = os.path.join(folder_path, cleaned_filename)
+        else:
+            print(f'No change needed: {file_path}')
