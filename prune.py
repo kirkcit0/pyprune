@@ -23,3 +23,18 @@ target_directory = './wbfs'
 
 # Dictionary to keep track of files by their base name
 file_dict = {}
+
+# First pass: Gather all files by base name
+for filename in os.listdir(target_directory):
+    if filename.startswith("._"):
+        continue  # Skip macOS metadata files
+    
+    file_path = os.path.join(target_directory, filename)
+    
+    # Check if it's a .wbfs, .wbf1, or .wbf2 file
+    if os.path.isfile(file_path) and filename.lower().endswith(('.wbfs', '.wbf1', '.wbf2')):
+        base_name, extension = os.path.splitext(filename)
+        if base_name not in file_dict:
+            file_dict[base_name] = []
+        file_dict[base_name].append(filename)
+
