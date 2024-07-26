@@ -17,3 +17,9 @@ def clean_wbfs_filename(filename):
         return cleaned_name + extension
     else:
         return filename
+
+# Specify the target directory containing .wbfs, .wbf1, and .wbf2 files
+target_directory = './wbfs'
+
+# Dictionary to keep track of files by their base name
+file_dict = {}
