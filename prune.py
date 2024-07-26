@@ -52,11 +52,21 @@ for base_name, files in file_dict.items():
         
         # Move the file to the new folder
         new_file_path_in_folder = os.path.join(folder_path, filename)
+        try:
+            os.rename(file_path, new_file_path_in_folder)
+        except FileNotFoundError:
+            print(f'File not found: {file_path}. Skipping.')
+            continue
         
         # Clean the filename
         cleaned_filename = clean_wbfs_filename(filename)
         if cleaned_filename != filename:
             # Rename the file inside the folder
             final_file_path = os.path.join(folder_path, cleaned_filename)
+            try:
+                os.rename(new_file_path_in_folder, final_file_path)
+                print(f'Renamed: {file_path} -> {final_file_path}')
+            except FileNotFoundError:
+                print(f'File not found during renaming: {new_file_path_in_folder}. Skipping.')
         else:
             print(f'No change needed: {file_path}')
